@@ -1,0 +1,21 @@
+FROM fedora:latest AS builder
+LABEL maintainer="gkent2@collin.edu"
+LABEL description="This is custom Docker Image for Assignment 4."
+
+RUN dnf -y upgrade
+RUN dnf -yqq install tuxpaint vim httpd 
+COPY website1.html /var/www/html
+COPY website2.html /var/www/html
+
+EXPOSE 80 
+ENTRYPOINT /usr/sbin/httpd -DFOREGROUND
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+FROM builder AS website1
+COPY website1.html /var/www/html
+LABEL website=1
+
+
+FROM builder  AS website2
+COPY website2.html /var/www/html
+LABEL website=2
